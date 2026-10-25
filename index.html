@@ -292,7 +292,7 @@ document.getElementById('copy').addEventListener('click',function(){
   (navigator.clipboard?navigator.clipboard.writeText(s):Promise.reject()).then(function(){say('تم نسخ الملخص')},function(){
     var ta=el('textarea');ta.value=s;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();
     try{document.execCommand('copy');say('تم نسخ الملخص')}catch(e){say('تعذر النسخ، حدّدي النص يدويا')}ta.remove()})});
-var HOOK='https://n8n.dounia1acdemy.com/webhook/tajalli-follow';
+var HOOK='https://script.google.com/macros/s/AKfycbzK0KOIhHlxbdv39_N1dZzmaAr-NCxZlfbd5k4UBLTOXvQZ81U6tcZVwlXGmjHJSICM/exec';
 function val(id){var e=document.getElementById(id);return e?e.value.trim():''}
 function payload(p){
   var goals='',matrix='',analysis='',money='';
@@ -314,8 +314,8 @@ document.getElementById('done').addEventListener('click',function(){
   if(!val('f_name')||!val('f_phone')){say('اكتبي اسمك ورقمك أولا.');return}
   if(p<60){say('عبّي أكثر من النموذج قبل ما تضغطي أكملت ('+p+'% الآن).');return}
   if(sending)return;sending=true;var b=this;b.disabled=true;say('جاري الإرسال...');
-  fetch(HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload(p))})
-   .then(function(r){if(!r.ok)throw 0;say('وصلنا ردك. يوصلك تقريرك قريبا.');try{localStorage.setItem('tajalli_sent','1')}catch(e){}})
+  fetch(HOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload(p))})
+   .then(function(){say('وصلنا ردك. يوصلك تقريرك قريبا.');try{localStorage.setItem('tajalli_sent','1')}catch(e){}})
    .catch(function(){say('ما قدرناش نرسلو. جرّبي مرة أخرى بعد شوية، أجوبتك محفوظة على جهازك.');b.disabled=false})
    .then(function(){sending=false});
 });
